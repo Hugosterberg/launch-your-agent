@@ -8,7 +8,7 @@
 
 ## Setup (every terminal)
 
-Make getting the key in as low-friction as possible. **First check whether `ANTHROPIC_API_KEY` is already set in the shell env** — many founders will already have it exported, or will happily set it that way (`export ANTHROPIC_API_KEY=…` in their own terminal); if it's there, skip the ask entirely and copy it into `.env` without printing it. Otherwise pre-create `./my-agent/.env` (chmod 600, in `.gitignore`) with a placeholder and have the founder paste the key into the file via its **absolute path** (their terminal's cwd isn't yours). The only hard rule is that the key never lands in the chat or an exported transcript — if it does, tell them to rotate it.
+Make getting the key in as low-friction as possible. **First check whether `ANTHROPIC_API_KEY` is already set in the shell env** — many founders will already have it exported, or will happily set it that way (`export ANTHROPIC_API_KEY=…` in their own terminal); if it's there, skip the ask entirely and copy it into `.env` without printing it. Otherwise pre-create `./my-agent/.env` with the Write tool (content: a single `ANTHROPIC_API_KEY=` placeholder line — a shell `> .env` redirect is typically permission-blocked), `chmod 600` it, add it to `.gitignore`, and have the founder paste the key into the file via its **absolute path** (their terminal's cwd isn't yours). The only hard rule is that the key never lands in the chat or an exported transcript — if it does, tell them to rotate it.
 
 ```bash
 set -a; source .env; set +a      # ANTHROPIC_API_KEY=sk-ant-...  (founder-created at platform.claude.com → API keys)
@@ -152,7 +152,7 @@ Runs of 8–10+ minutes are normal — say so. Also hand the founder the Console
 
 ## 6. Outputs
 
-Agent writes to `/mnt/session/outputs/`. Fetch:
+Agent writes to `/mnt/session/outputs/`. **List files only after the session's `status` is `idle`** — output files are re-finalized under a new `file_id` when the run settles, so an ID captured mid-run can 404 on `/content`. If a download 404s, re-list; the file is still there under a fresh ID.
 ```bash
 curl -sS "$BASE/files?scope_id=$SESSION_ID" "${H[@]}" | jq -r '.data[] | "\(.id) \(.filename)"'
 curl -sS "$BASE/files/$FILE_ID/content" "${H[@]}" -o output.md

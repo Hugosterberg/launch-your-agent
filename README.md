@@ -6,12 +6,14 @@
 A [Claude Code](https://code.claude.com) skill that helps a technical founder build whatever they want on **Claude Managed Agents (CMA)** — an internal worker, a piece of their product, a customer-facing agent. It interviews you about what you want to build, scopes a v0, launches it in your own account, grades it against your own definition of done, iterates, and (if it should run on a clock) puts it on a scheduled deployment — with everything bigger laid out as an explicit v1/v2 plan.
 
 > Reference implementation. Not maintained and not accepting contributions. Licensed under [Apache 2.0](./LICENSE).
+>
+> This is an educational skill that walks you through composing managed-agent primitives to solve your problem. Because it explains each step, it's more token-intensive than a purpose-built agent would be.
 
 ## Quickstart
 
 ```bash
-git clone <this-repo>
-cd <this-repo>
+git clone https://github.com/anthropics/launch-your-agent.git
+cd launch-your-agent
 claude
 ```
 
@@ -23,7 +25,7 @@ Then type:
 
 The skills in `.claude/skills/` are picked up automatically when you run Claude Code inside this folder — nothing to install.
 
-When you're done (or any time later), `/wrap-up` regenerates the overview page, recaps every primitive you now own, and suggests the next 1–2 upgrades.
+When you're done (or any time later), `/wrap-up` refreshes the overview page, recaps every primitive you now own, and suggests the next 1–2 upgrades.
 
 ## What you need
 
